@@ -13,7 +13,7 @@ Iremos explicando por pasos como construir el **Tres en ralla**.
 
 Lo definiremos al inicio del todo, será un objeto de tipo `list` y esta será una matriz con más listas.
 
-Se hace como función para que al reiniciar, el mapa se reinicie tan simple como `mapa = map(=`
+Se hace como función para que al reiniciar, el mapa se reinicie tan simple como `mapa = map()`
 
 ```python
 def map():
