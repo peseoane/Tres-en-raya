@@ -1,3 +1,5 @@
+> Descubre el bug, es muy facilito!
+
 # Tres en raya para Python 3 (versión con matrices)
 Juego escrito en Python 3 (de uso en terminal) de un 3 en raya, para uso educativo nada complejo.
 
