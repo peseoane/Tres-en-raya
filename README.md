@@ -15,24 +15,13 @@ Lo definiremos al inicio del todo, será un objeto de tipo `list` y esta será u
 
 Se hace como función para que al reiniciar, el mapa se reinicie tan simple como `mapa = map()`
 
-```python
-def map():
-    map = [
-        [" ", " ", " "],
-        [" ", " ", " "],
-        [" ", " ", " "],
-    ]
-    return map
-```
+![def map()](https://raw.githubusercontent.com/peseoane/Tres-en-raya/9e43ec0c12ee5afd5e66ef07fc658acb51b53f87/def%20map().svg)
 
 ## Impresión del mapa
 
 Para ello usaremos una función que no acepta argumentos, nosotros la hemos llamado `print_map()` pero eso recordar que es indiferente, podéis nombrar cómo os plazca. Un simple bucle ya nos muestra la matriz en pantalla.
 
-def print_map(mapa_activo):
-    for fila in mapa_activo:
-        print(fila)
-    return True
+![print map()](https://raw.githubusercontent.com/peseoane/Tres-en-raya/ac1a427f8aad70c8f3d25ff5ecdf61f715f584b8/update%20map().svg)
 
 ## Pedir los datos al jugador
 
@@ -40,22 +29,7 @@ def print_map(mapa_activo):
 * Si el usuario se sale de los valores o no pone 0 o X como ficha le volvemos mandar a empezar
 * Si pone algo que no sea un número se generará una excepción al hacer casting en x,y, por ello al final el bloque `except`  le dice al usuario que vuelva a intentarlo bien
 
-```python
-def ask_data():
-    while True:
-        try:
-            x = int(input("Introduce la coordenada X del 0 al 2: "))
-            y = int(input("Introduce la coordenada Y del 0 al 2: "))
-            char = str(input("Introduce 0 para círculo o X para cruz: "))
-            if x >= 0 and x <= 2 and y >= 0 and x <= 2:
-                if char.lower() == "x" or char == "0":
-                    return x, y, char
-            else:
-                print("Por favor introduce una coordenada válida")
-
-        except:
-            print("Por favor introduce un número entero")
-```
+![ask data()](https://raw.githubusercontent.com/peseoane/Tres-en-raya/9e43ec0c12ee5afd5e66ef07fc658acb51b53f87/ask%20data()%20(1).svg)
 
 ## Actualizar mapa
 
@@ -65,77 +39,18 @@ Este caso es sencillo:
 * Comprobamos que la posición escogida no haya sido ocupada.
 * De no estarlo, le asigno la ficha del jugador
 
-```python
-def update_map(mapa_activo, x, y, char):
-
-    if mapa_activo[x][y] == str(" "):
-        mapa_activo[x][y] = char
-
-    else:
-        print("Esa coordenada ya está siendo utuilizada, use una libre")
-
-    return mapa_activo
-```
+![update map()](https://raw.githubusercontent.com/peseoane/Tres-en-raya/9e43ec0c12ee5afd5e66ef07fc658acb51b53f87/update%20map().svg)
 
 ### Comprobar si hay victoria
 
 Cada fin de ciclo, se hará el siguiente código repetitivo.
 
-```python
-def winner(mapa_activo):
+![winner()](https://raw.githubusercontent.com/peseoane/Tres-en-raya/9e43ec0c12ee5afd5e66ef07fc658acb51b53f87/winner().svg)
 
-    # Comprobar horizontales
-    for fila in range(3):
-        if (
-            mapa_activo[fila][0]
-            == mapa_activo[fila][1]
-            == mapa_activo[fila][2]
-            != str(" ") # No nos interesa que sean iguales al espacio en blanco!
-        ):
-            print("Ha ganado la ficha %s" % mapa_activo[fila][0])
-            return True
-    # Comprobar columnas
-    for columna in range(3):
-        if (
-            mapa_activo[0][columna]
-            == mapa_activo[1][columna]
-            == mapa_activo[2][columna]
-            != str(" ")
-        ):
-            print("Ha ganado la ficha %s" % mapa_activo[0][columna])
-            return True
-    # Comprobar diagonales
-    if mapa_activo[0][0] == mapa_activo[1][1] == mapa_activo[2][2] != str(" "):
-        print("Ha ganado la ficha %s" % mapa_activo[0][0])
-        return True
-    if mapa_activo[2][2] == mapa_activo[1][1] == mapa_activo[0][0] != str(" "):
-        print("Ha ganado la ficha %s" % mapa_activo[0][0])
-        return True
-    # Comprobar si quedan huecos
-    for fila in mapa_activo:
-        if str(" ") in fila: # Si queda algún espacio en blanco, sigue la partida
-            return False # Por ello retorno un 0
-    print("EMPATE")
-    return True
-```
 ## Juego principal
 
-```python
-if __name__ == "__main__":
-
-    MAPA_ACTIVO = map()
-
-    while True:
-
-        print_map(MAPA_ACTIVO)
-        X, Y, CHAR = ask_data()
-        update_map(MAPA_ACTIVO, X, Y, CHAR)
-        if winner(MAPA_ACTIVO):
-            print_map(MAPA_ACTIVO)
-            print("\n\nReinicio del mapa\n\n")
-            MAPA_ACTIVO = map()
-```
+![main](https://raw.githubusercontent.com/peseoane/Tres-en-raya/9e43ec0c12ee5afd5e66ef07fc658acb51b53f87/main.svg)
 
 ## Pruébalo
 
-https://trinket.io/embed/python3/e793b1769e?start=result&showInstructions=true"
+https://trinket.io/embed/python3/e793b1769e?start=result&showInstructions=true
