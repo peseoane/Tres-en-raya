@@ -57,28 +57,6 @@ def ask_data():
             print("Por favor introduce un número entero")
 ```
 
-## Convertir X,Y en la posición 2D
-
-Para ello usaremos una función que toma como valor la X, la Y y devuelve a que posición corresponde en la lista original:
-
-```python
-def conv(x,y):
-    conv = {0:[1,1], # Pongo todas las coordenadas posibles asociadas a su número
-        1:[1,2],
-        2:[1,3],
-        3:[2,1],
-        4:[2,2],
-        5:[2,3],
-        6:[3,1],
-        7:[3,2],
-        8:[3,3],
-        }
-
-    for key in conv: # Paso de coordenada en coordenada
-        if conv[key][0] == x  and conv[key][1] == y: # Si la X e Y coinciden con el número real en 2D, devuelvo al programa principal ese número
-            return key # Aquí lo devuelvo
-```
-
 ## Actualizar mapa
 
 Este caso es sencillo:
