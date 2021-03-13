@@ -158,7 +158,7 @@ if __name__ == '__main__': # Aquí empieza nuestro juego
 
 ## Pruébalo
 
-<iframe src="https://trinket.io/embed/python3/e793b1769e?start=result&showInstructions=true" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
+https://trinket.io/embed/python3/e793b1769e?start=result&showInstructions=true"
 
 
 
