@@ -1,11 +1,9 @@
-# Tres en raya para Python 3
+# Tres en raya para Python 3 (versión con matrices)
 Juego escrito en Python 3 (de uso en terminal) de un 3 en raya, para uso educativo nada complejo.
 
 ![Terminal mostrando el juego](https://raw.githubusercontent.com/peseoane/Tres-en-raya/main/3enraya.png)
 
 # Manual (versión sin matrices)
-
-# Tres en raya con Python 3.x
 
 El objetivo es crear un juego de terminal muy sencillo sin usar librerías ni recursos externos, con lo que los profesores en teoría y práctica os han mostrado será más que suficiente.
 
