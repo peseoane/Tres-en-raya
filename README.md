@@ -1,7 +1,7 @@
 # Tres en raya para Python 3 (versión con matrices)
 Juego escrito en Python 3 (de uso en terminal) de un 3 en raya, para uso educativo nada complejo.
 
-![Terminal mostrando el juego](https://raw.githubusercontent.com/peseoane/Tres-en-raya/5a2d6001cbb403dc880e7c9aae49b06f016a3501/carbon.svg)
+![Terminal mostrando el juego](https://raw.githubusercontent.com/peseoane/Tres-en-raya/3bf95f78d7cf093b766fb2583c1e4b73a3eb35fa/carbon%20(1).svg)
 
 # Manual
 
