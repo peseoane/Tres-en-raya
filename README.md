@@ -11,34 +11,30 @@ Iremos explicando por pasos como construir el **Tres en ralla**.
 
 ## Creación del mapa
 
-Lo definiremos al inicio del todo, será un objeto de tipo `list` y a su vez, por estética cada posición contendrá el valor de `[' ']`, es decir, otra lista con un espacio en blanco en su interior, de este modo podremos ver una cuadrícula al imprimir nuestro mapa.
+Lo definiremos al inicio del todo, será un objeto de tipo `list` y esta será una matriz con más listas.
 
-```python
-map = [[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' ']]
-```
+Se hace como función para que al reiniciar, el mapa se reinicie tan simple como `mapa = map(=`
+
+def map():
+    map = [
+        [" ", " ", " "],
+        [" ", " ", " "],
+        [" ", " ", " "],
+    ]
+    return map
 
 ## Impresión del mapa
 
-Para ello usaremos una función que no acepta argumentos, nosotros la hemos llamado `print_map()` pero eso recordar que es indiferente, podéis nombrar cómo os plazca.
+Para ello usaremos una función que no acepta argumentos, nosotros la hemos llamado `print_map()` pero eso recordar que es indiferente, podéis nombrar cómo os plazca. Un simple bucle ya nos muestra la matriz en pantalla.
 
-```python
-def print_map():
-    global map	# La variable la leo global dado que afecta a todo el juego
-    cont = 0 # Pongo un contador
-    for coordenada in map: # Para pasar de 2D a 3D...
-        cont += 1 # Autoincremento en cada paso del mapa (3x3) = 9 pero en Python se empieza a contar desde 0, así que termina en 8
-        if cont == 3: # Al llegar a este punto imprimo normal para que me haga un salto de línea al acabar
-            print(coordenada)
-            cont = 0 # Y reinicio el contador para volver a empezar
-        else:
-            print(coordenada, end='') # Pero si no he saltado de fila, ese final le dice que no ponga un salto de línea si no, nada en este caso
-    
-    return
-```
+def print_map(mapa_activo):
+    for fila in mapa_activo:
+        print(fila)
+    return True
 
 ## Pedir los datos al jugador
 
-* Aquí le pedimos la coordenada X e Y, ambas deben ser dígitos del rango [1,3].
+* Aquí le pedimos la coordenada X e Y, ambas deben ser dígitos del rango [0,2].
 * Si el usuario se sale de los valores o no pone 0 o X como ficha le volvemos mandar a empezar
 * Si pone algo que no sea un número se generará una excepción al hacer casting en x,y, por ello al final el bloque `except`  le dice al usuario que vuelva a intentarlo bien
 
@@ -46,18 +42,17 @@ def print_map():
 def ask_data():
     while True:
         try:
-            x = int(input('Introduce la coordenada X del 1 al 3: '))
-            y = int(input('Introduce la coordenada Y del 1 al 3: '))
-            char = str(input('Introduce 0 para círculo o X para cruz: '))
-            if x >=0 and x<=3 and y >=0 and x<=3:
-                if char.lower() == 'x' or char == '0':
-                    return x, y,char
+            x = int(input("Introduce la coordenada X del 0 al 2: "))
+            y = int(input("Introduce la coordenada Y del 0 al 2: "))
+            char = str(input("Introduce 0 para círculo o X para cruz: "))
+            if x >= 0 and x <= 2 and y >= 0 and x <= 2:
+                if char.lower() == "x" or char == "0":
+                    return x, y, char
             else:
-                print('Por favor introduce una coordenada válida')
-
+                print("Por favor introduce una coordenada válida")
 
         except:
-            print('Por favor introduce un número entero')
+            print("Por favor introduce un número entero")
 ```
 
 ## Convertir X,Y en la posición 2D
@@ -91,15 +86,15 @@ Este caso es sencillo:
 * De no estarlo, le asigno la ficha del jugador
 
 ```python
-def update_map(pos,char):
+def update_map(mapa_activo, x, y, char):
 
-    global map
+    if mapa_activo[x][y] == str(" "):
+        mapa_activo[x][y] = char
 
-    if map[pos]==[' ']:
-        map[pos] = [char]
     else:
-        print('La posición ya estaba ocupada, vuelva a intentarlo')
-    return
+        print("Esa coordenada ya está siendo utuilizada, use una libre")
+
+    return mapa_activo
 ```
 
 ### Comprobar si hay victoria
@@ -107,168 +102,60 @@ def update_map(pos,char):
 Cada fin de ciclo, se hará el siguiente código repetitivo.
 
 ```python
-def winner():
-    # Casos verticales
-    if map[0] == map[3] == map[6] != [' ']: # Si la primera columna es idéntica
-        print('Winner %s' % map[0]) # Diho que ha ganado la ficha en cuestión
-        return True # Devuelvo un booleano de verdad para que reinicie el mapa
-    elif map[1] == map[4] == map[7] != [' ']:
-        print('Winner %s' % map[1])
-        return True
-    elif map[2] == map[5] == map[8] != [' ']:
-        print('Winner %s' % map[2])
-        return True
-    # Casos horizontales
-    elif map[0] == map[1] == map[2] != [' ']:
-        print('Winner %s' % map[0])
-        return True
-    elif map[3] == map[4] == map[5] != [' ']:
-        print('Winner %s' % map[3])
-        return True
-    elif map[6] == map[7] == map[8] != [' ']:
-        print('Winner %s' % map[6])
-        return True
-    # Casos diagonales
-    elif map[0] == map[4] == map[8] != [' ']:
-        print('Winner %s' % map[0])
-        return True
-    elif map[6] == map[4] == map[2] != [' ']:
-        print('Winner %s' % map[6])
-        return True
-    else:
-        if not [' '] in map: # En caso de que lleguemos aquí sin ganadores y sin espacios libres, daremos por terminada la partida y en empate
-            print('EMPATE')
+def winner(mapa_activo):
+
+    # Comprobar horizontales
+    for fila in range(3):
+        if (
+            mapa_activo[fila][0]
+            == mapa_activo[fila][1]
+            == mapa_activo[fila][2]
+            != str(" ") # No nos interesa que sean iguales al espacio en blanco!
+        ):
+            print("Ha ganado la ficha %s" % mapa_activo[fila][0])
             return True
-        return False
+    # Comprobar columnas
+    for columna in range(3):
+        if (
+            mapa_activo[0][columna]
+            == mapa_activo[1][columna]
+            == mapa_activo[2][columna]
+            != str(" ")
+        ):
+            print("Ha ganado la ficha %s" % mapa_activo[0][columna])
+            return True
+    # Comprobar diagonales
+    if mapa_activo[0][0] == mapa_activo[1][1] == mapa_activo[2][2] != str(" "):
+        print("Ha ganado la ficha %s" % mapa_activo[0][0])
+        return True
+    if mapa_activo[2][2] == mapa_activo[1][1] == mapa_activo[0][0] != str(" "):
+        print("Ha ganado la ficha %s" % mapa_activo[0][0])
+        return True
+    # Comprobar si quedan huecos
+    for fila in mapa_activo:
+        if str(" ") in fila: # Si queda algún espacio en blanco, sigue la partida
+            return False # Por ello retorno un 0
+    print("EMPATE")
+    return True
 ```
 ## Juego principal
 
 ```python
-if __name__ == '__main__': # Aquí empieza nuestro juego
+if __name__ == "__main__":
+
+    MAPA_ACTIVO = map()
+
     while True:
-        print_map() # Empezamos imprimiendo el mapa vacio
-        X,Y,CHAR = ask_data() # le pedimos las coordenadas y ficha al usuario
-        POS = conv(X,Y) # convertimos las coordenadas 3D en 2D para ir a la lista
-        update_map(POS,CHAR) # ponemos la ficha si es posible donde pidió el usuario
-        if winner(): # comprobamos si hay victoria, en ese caso reiniciamos el mapa
-            		 # para volver a empezar
-            print('\n\nReinicio del mapa\n\n')
-            map =  [[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' ']]
+
+        print_map(MAPA_ACTIVO)
+        X, Y, CHAR = ask_data()
+        update_map(MAPA_ACTIVO, X, Y, CHAR)
+        if winner(MAPA_ACTIVO):
+            print_map(MAPA_ACTIVO)
+            print("\n\nReinicio del mapa\n\n")
+            MAPA_ACTIVO = map()
 ```
 
 ## Pruébalo
 
 https://trinket.io/embed/python3/e793b1769e?start=result&showInstructions=true"
-
-
-
-## Código completo
-
-```python
-map = [[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' ']]
-
-def print_map():
-
-    global map
-
-    cont = 0
-    for coordenada in map:
-        cont += 1
-        if cont == 3:
-            print(coordenada)
-            cont = 0
-        else:
-            print(coordenada, end='')
-    
-    return
-
-def conv(x,y):
-    conv = {0:[1,1],
-        1:[1,2],
-        2:[1,3],
-        3:[2,1],
-        4:[2,2],
-        5:[2,3],
-        6:[3,1],
-        7:[3,2],
-        8:[3,3],
-        }
-
-    for key in conv:
-        if conv[key][0] == x  and conv[key][1] == y:
-            return key
-
-def update_map(pos,char):
-
-    global map
-
-    if map[pos]==[' ']:
-        map[pos] = [char]
-    else:
-        print('La posición ya estaba ocupada, vuelva a intentarlo')
-    return
-
-def winner():
-
-    # Casos verticales
-    if map[0] == map[3] == map[6] != [' ']:
-        print('Winner %s' % map[0])
-        return True
-    elif map[1] == map[4] == map[7] != [' ']:
-        print('Winner %s' % map[1])
-        return True
-    elif map[2] == map[5] == map[8] != [' ']:
-        print('Winner %s' % map[2])
-        return True
-    # Casos horizontales
-    elif map[0] == map[1] == map[2] != [' ']:
-        print('Winner %s' % map[0])
-        return True
-    elif map[3] == map[4] == map[5] != [' ']:
-        print('Winner %s' % map[3])
-        return True
-    elif map[6] == map[7] == map[8] != [' ']:
-        print('Winner %s' % map[6])
-        return True
-    # Casos diagonales
-    elif map[0] == map[4] == map[8] != [' ']:
-        print('Winner %s' % map[0])
-        return True
-    elif map[6] == map[4] == map[2] != [' ']:
-        print('Winner %s' % map[6])
-        return True
-    else:
-        if not [' '] in map:
-            print('EMPATE')
-            return True
-        return False
-    
-def ask_data():
-    while True:
-        try:
-            x = int(input('Introduce la coordenada X del 1 al 3: '))
-            y = int(input('Introduce la coordenada Y del 1 al 3: '))
-            char = str(input('Introduce 0 para círculo o X para cruz: '))
-            if x >=0 and x<=3 and y >=0 and x<=3:
-                if char.lower() == 'x' or char == '0':
-                    return x, y,char
-            else:
-                print('Por favor introduce una coordenada válida')
-
-
-        except:
-            print('Por favor introduce un número entero')
-
-if __name__ == '__main__':
-    
-    while True:
-        
-        print_map()
-        X,Y,CHAR = ask_data()
-        POS = conv(X,Y)
-        update_map(POS,CHAR)
-        if winner():
-            print('\n\nReinicio del mapa\n\n')
-            map =  [[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' '],[' ']]
-
-```
