@@ -3,7 +3,7 @@ Juego escrito en Python 3 (de uso en terminal) de un 3 en raya, para uso educati
 
 ![Terminal mostrando el juego](https://raw.githubusercontent.com/peseoane/Tres-en-raya/main/3enraya.png)
 
-# Manual (versión sin matrices)
+# Manual
 
 El objetivo es crear un juego de terminal muy sencillo sin usar librerías ni recursos externos, con lo que los profesores en teoría y práctica os han mostrado será más que suficiente.
 
@@ -15,6 +15,7 @@ Lo definiremos al inicio del todo, será un objeto de tipo `list` y esta será u
 
 Se hace como función para que al reiniciar, el mapa se reinicie tan simple como `mapa = map(=`
 
+```python
 def map():
     map = [
         [" ", " ", " "],
@@ -22,6 +23,7 @@ def map():
         [" ", " ", " "],
     ]
     return map
+```
 
 ## Impresión del mapa
 
